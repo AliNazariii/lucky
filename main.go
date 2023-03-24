@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "lucky/cmd"
 
+func main() {
+	cmd.Execute()
 }
