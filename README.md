@@ -30,7 +30,7 @@ The current roadmap for Lucky includes:
 
 - [X] Implementing a module using the RedLock algorithm and Redis as a backend
 - [ ] Implementing a module using ZooKeeper as a backend
-- [ ] Implementing a module using etcd as a backend
+- [X] Implementing a module using etcd as a backend
 - [ ] Implementing a module using MySQL as a backend
 - [ ] Implementing a module using PostgreSQL as a backend
 - [ ] Implementing a module using MongoDB as a backend

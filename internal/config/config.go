@@ -11,10 +11,15 @@ type RedisConfig struct {
 	Password string `yaml:"password"`
 }
 
+type EtcdConfig struct {
+	Endpoints []string `yaml:"endpoints"`
+	Password  string   `yaml:"password"`
+}
 type Config struct {
 	Port  int
 	Test  string
 	Redis RedisConfig `yaml:"redis"`
+	Etcd  EtcdConfig  `yaml:"etcd"`
 }
 
 func GetConfig(serviceName string, configPath string) *Config {
