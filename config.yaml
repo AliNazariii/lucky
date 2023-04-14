@@ -1,2 +1,5 @@
 redis:
   host: localhost:6379
+etcd:
+  endpoints:
+    - localhost:2379
