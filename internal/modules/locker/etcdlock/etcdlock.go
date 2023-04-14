@@ -44,12 +44,14 @@ func New(config config.EtcdConfig) locker.Locker {
 
 func (m *EtcdLockImpl) Lock(key string) error {
 	// Obtain a new mutex by using the same name for all instances wanting the same lock.
-	mutex, _ := m.data.LoadOrStore(key, concurrency.NewMutex(m.client, key))
+	mutex := concurrency.NewMutex(m.client, key)
 
 	ctx := context.Background()
-	if err := mutex.(*concurrency.Mutex).Lock(ctx); err != nil {
+	if err := mutex.Lock(ctx); err != nil {
 		return err
 	}
+
+	m.data.Store(key, mutex)
 	return nil
 }
 

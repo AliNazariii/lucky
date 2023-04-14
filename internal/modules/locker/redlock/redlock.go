@@ -35,14 +35,15 @@ func New(config config.RedisConfig) locker.Locker {
 
 func (m *RedLockImpl) Lock(key string) error {
 	// Obtain a new mutex by using the same name for all instances wanting the same lock.
-	mutex, _ := m.data.LoadOrStore(key, m.locker.NewMutex(key))
+	mutex := m.locker.NewMutex(key)
 
 	// Obtain a lock for our given mutex. After this is successful, no one else
 	// can obtain the same lock (the same mutex name) until we unlock it.
-	if err := mutex.(*redsync.Mutex).Lock(); err != nil {
+	if err := mutex.Lock(); err != nil {
 		return err
 	}
 
+	m.data.Store(key, mutex)
 	return nil
 }
 

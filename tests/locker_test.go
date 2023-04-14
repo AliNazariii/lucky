@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"github.com/go-redsync/redsync/v4"
 	"go.uber.org/atomic"
 	"lucky/internal/config"
 	"lucky/internal/modules/locker"
@@ -39,8 +40,12 @@ func TestScenario(t *testing.T) {
 							defer lockWG.Done()
 							err := lockerModule.Lock(key)
 							if err != nil {
-								//t.Errorf("Can't lock key: %s. err: %s", key, err)
-								return
+								_, isErrTaken := err.(*redsync.ErrTaken)
+								if isErrTaken {
+									return
+								} else {
+									t.Errorf("Can't lock key: %s. err: %s", key, err)
+								}
 							}
 							successLocks.Inc()
 						}()

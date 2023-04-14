@@ -2,6 +2,7 @@ package sandbox
 
 import (
 	"fmt"
+	"github.com/go-redsync/redsync/v4"
 	"go.uber.org/atomic"
 	"lucky/internal/modules/locker"
 	timeutils "lucky/pkg/time"
@@ -42,8 +43,12 @@ func (m *SandBoxImpl) Run() {
 
 					err := m.locker.Lock(key)
 					if err != nil {
-						//fmt.Printf("[Fail] - %s: Can't lock. err: %s\n", key, err)
-						return
+						_, isErrTaken := err.(*redsync.ErrTaken)
+						if isErrTaken {
+							return
+						} else {
+							fmt.Printf("[Fail] - %s: Can't lock. err: %s\n", key, err)
+						}
 					}
 					successLocks.Inc()
 				}()
