@@ -58,5 +58,6 @@ func (m *RedLockImpl) Unlock(key string) error {
 		return err
 	}
 
+	m.data.Delete(key)
 	return nil
 }

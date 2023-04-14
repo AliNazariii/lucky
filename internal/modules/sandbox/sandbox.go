@@ -42,7 +42,7 @@ func (m *SandBoxImpl) Run() {
 
 					err := m.locker.Lock(key)
 					if err != nil {
-						fmt.Printf("[Fail] - %s: Can't lock. err: %s\n", key, err)
+						//fmt.Printf("[Fail] - %s: Can't lock. err: %s\n", key, err)
 						return
 					}
 					successLocks.Inc()
